@@ -1,0 +1,16 @@
+.message {
+  background: beige;
+  border: 1px solid salmon;
+  min-height: 1em;
+  padding: 2px;
+}
+.blog {
+  margin-top: 1rem;
+}
+
+.blog-data > * {
+  margin-bottom: 10px;
+}
+.blog:nth-child(even) {
+  background-color: #dcdddfb5;
+}

@@ -34,7 +34,7 @@ const Blog = ({ blog, updateLikes, deleteBlog }) => {
   return (
     <>
       <div style={blogStyle} className='blog'>
-        {blog.title}
+        {blog.title} {blog.author}
         <button
           onClick={() => {
             setVisible(!visible);
@@ -55,7 +55,7 @@ const Blog = ({ blog, updateLikes, deleteBlog }) => {
             <button onClick={handleDelete}>Delete</button>
           )}
           <br />
-          {blog.author}
+          {blog.user.username}
         </div>
       </div>
     </>

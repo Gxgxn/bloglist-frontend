@@ -30,7 +30,7 @@ const Blog = ({ blog, updateLikes, deleteBlog }) => {
     }
   };
   const visibiltyToggle = { display: visible ? '' : 'none' };
-  console.log();
+
   return (
     <>
       <div style={blogStyle} className='blog'>
@@ -43,11 +43,11 @@ const Blog = ({ blog, updateLikes, deleteBlog }) => {
           View
         </button>
         <div style={visibiltyToggle} className='blog-data'>
-          <a target='_blank' rel='noreferrer' href={blog.url}>
+          <a target='_blank' rel='noreferrer' href={blog.url} className='url'>
             {blog.url}
           </a>
           <br />
-          <span>Likes {blog.likes}</span>
+          <span className='likes'>Likes {blog.likes}</span>
           &nbsp;
           <button onClick={handleLike}>Like</button>
           <br />

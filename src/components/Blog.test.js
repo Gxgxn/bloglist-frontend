@@ -31,4 +31,14 @@ describe('<Blog />', () => {
     expect(element).toBeDefined();
     expect(blogData).toHaveStyle('display: none');
   });
+  test('url & likes are shown when view button is clicked', async () => {
+    const user = userEvent.setup();
+    const button = screen.getByText('View');
+    await user.click(button);
+
+    const likes = container.querySelector('.likes');
+    const url = container.querySelector('.url');
+    expect(likes).toHaveTextContent(blog.likes);
+    expect(url).toHaveTextContent(blog.url);
+  });
 });

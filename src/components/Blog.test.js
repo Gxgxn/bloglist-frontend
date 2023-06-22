@@ -41,4 +41,13 @@ describe('<Blog />', () => {
     expect(likes).toHaveTextContent(blog.likes);
     expect(url).toHaveTextContent(blog.url);
   });
+
+  test('Like Button is clicked twice', async () => {
+    const users = userEvent.setup();
+    const button = screen.getByText('Like');
+    await users.click(button);
+    await users.click(button);
+
+    expect(likeMockHandler.mock.calls).toHaveLength(2);
+  });
 });

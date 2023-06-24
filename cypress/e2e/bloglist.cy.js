@@ -107,5 +107,52 @@ describe('Blog app', function () {
         cy.contains('Delete').should('not.exist');
       });
     });
+
+    describe('When multiple blogs exits', function () {
+      beforeEach(function () {
+        cy.createNote({
+          title: 'Blog with second most likes',
+          author: 'cypress',
+          url: 'https://fullstackopen.com/en/part5',
+        });
+        cy.createNote({
+          title: 'Blog with most likes',
+          author: 'cypress',
+          url: 'https://fullstackopen.com/en/part5',
+        });
+      });
+      it.only('Blogs Are sorted by the most likes', function () {
+        cy.contains('Blog with most likes').contains('View').click();
+
+        cy.contains('Blog with most likes')
+          .find('button')
+          .contains('Like')
+          .as('mostlikes');
+
+        cy.contains('Blog with second most likes').contains('View').click();
+
+        cy.contains('Blog with second most likes')
+          .find('button')
+          .contains('Like')
+          .as('secondmostlikes');
+
+        cy.get('@mostlikes').click();
+
+        cy.get('.blog').eq(0).should('contain', 'Blog with most likes');
+        cy.get('.blog').eq(1).should('contain', 'Blog with second most likes');
+
+        cy.get('@secondmostlikes').click().wait(500);
+        cy.get('@secondmostlikes').click().wait(500);
+        cy.get('.blog').eq(1).should('contain', 'Blog with most likes');
+        cy.get('.blog').eq(0).should('contain', 'Blog with second most likes');
+
+        cy.get('@mostlikes').click().wait(500);
+        cy.get('@mostlikes').click().wait(500);
+        cy.get('@mostlikes').click().wait(500);
+
+        cy.get('.blog').eq(0).should('contain', 'Blog with most likes');
+        cy.get('.blog').eq(1).should('contain', 'Blog with second most likes');
+      });
+    });
   });
 });

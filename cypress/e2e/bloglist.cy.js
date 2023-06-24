@@ -70,9 +70,41 @@ describe('Blog app', function () {
       });
       it('user can like a bog', function () {
         cy.contains('another note cypress').contains('View').click();
-        cy.contains('Like').contains('0').parent().find('button').click();
-        cy.contains('Like').contains('1').parent().find('button').click();
-        cy.contains('Like').contains('2');
+        cy.contains('Like')
+          .contains('0')
+          .parent()
+          .find('button')
+          .contains('Like')
+          .click();
+
+        cy.contains('Like').contains('1');
+      });
+
+      it('only user who created a blog can delete it', function () {
+        cy.contains('another note cypress').contains('View').click();
+        cy.contains('Delete').click();
+        cy.contains('another note cypress').should('not.exist');
+      });
+
+      it('only user who created a blog can delete it', function () {
+        cy.contains('another note cypress').contains('View').click();
+        cy.contains('Delete');
+        cy.contains('logout').click();
+        cy.request('POST', `${Cypress.env('BACKEND')}/testing/reset`);
+        const user = {
+          name: 'John',
+          username: 'gagan',
+          password: 'root',
+        };
+        cy.request('POST', `${Cypress.env('BACKEND')}/users`, user);
+
+        cy.get('#username').type('gagan');
+        cy.get('#password').type('root');
+        cy.contains('login').click();
+
+        cy.contains('John is logged in');
+        cy.contains('another note cypress').contains('View').click();
+        cy.contains('Delete').should('not.exist');
       });
     });
   });

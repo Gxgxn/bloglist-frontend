@@ -150,6 +150,7 @@ const App = () => {
             .map((blog) => (
               <Blog
                 key={blog.id}
+                user={user}
                 blog={blog}
                 updateLikes={updateLikes}
                 deleteBlog={deleteBlog}

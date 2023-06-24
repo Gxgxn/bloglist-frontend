@@ -59,5 +59,21 @@ describe('Blog app', function () {
       cy.get('#create-blog').click();
       cy.get('.blog').contains('Test blog');
     });
+
+    describe('And a blog exist', function () {
+      beforeEach(function () {
+        cy.createNote({
+          title: 'another note cypress',
+          author: 'cypress',
+          url: 'https://fullstackopen.com/en/part5',
+        });
+      });
+      it('user can like a bog', function () {
+        cy.contains('another note cypress').contains('View').click();
+        cy.contains('Like').contains('0').parent().find('button').click();
+        cy.contains('Like').contains('1').parent().find('button').click();
+        cy.contains('Like').contains('2');
+      });
+    });
   });
 });
